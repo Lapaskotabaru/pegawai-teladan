@@ -140,38 +140,43 @@
   </style>
   <script>
     // Fungsi untuk mengirimkan data menggunakan AJAX
-function submitForm(event) {
-  event.preventDefault(); // Mencegah form untuk submit secara default
+    function submitForm(event) {
+      event.preventDefault(); // Mencegah form untuk submit secara default
 
-  // Ambil data dari form
-  var formData = new FormData(event.target);
-  var formObject = {};
-  formData.forEach((value, key) => { formObject[key] = value });
+      // Ambil data dari form
+      var formData = new FormData(event.target);
+      var formObject = {};
+      formData.forEach((value, key) => { formObject[key] = value });
 
-  // Mengonversi data menjadi format JSON
-  var jsonData = JSON.stringify(formObject);
+      // Mengonversi data menjadi format JSON
+      var jsonData = JSON.stringify(formObject);
 
-  // Log data JSON untuk memverifikasi format
-  console.log(jsonData);  // Cek format JSON yang dikirim
+      // Log data JSON untuk memverifikasi format
+      console.log(jsonData);  // Cek format JSON yang dikirim
 
-  // Kirim data ke Google Apps Script (menggunakan fetch)
-  fetch('https://script.google.com/macros/s/AKfycbzBfbP3_An-qPQBIXD5bIJ-kaPMJiiYOaL5Pg7Tj6Yc5Yl-7eYThNXRUNwxx39jzjpd/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json' // Mengirim data dalam format JSON
-    },
-    body: jsonData
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert("Penilaian terkirim!");
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert("Terjadi kesalahan. Coba lagi.");
-  });
-}
+      // URL Google Apps Script yang akan diakses
+      const googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbzBfbP3_An-qPQBIXD5bIJ-kaPMJiiYOaL5Pg7Tj6Yc5Yl-7eYThNXRUNwxx39jzjpd/exec';
+      
+      // Gunakan CORS Anywhere untuk mengatasi masalah CORS
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
+      // Mengirim data ke aplikasi web menggunakan fetch (AJAX)
+      fetch(proxyUrl + googleAppsScriptUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json' // Mengirim data dalam format JSON
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("Penilaian terkirim!");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Terjadi kesalahan. Coba lagi.");
+      });
+    }
   </script>
 </head>
 <body>
