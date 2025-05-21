@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Penilaian Pegawai Teladan - Lapas Kotabaru</title>
+  <style>
+    :root {
+      --navy: #0a1f44;
+      --gold: #f5c518;
+      --white: #ffffff;
+      --light-gray: #f0f0f0;
+      --gray-border: #ccc;
+      --input-padding: 10px;
+      --font-size: 14px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-gray);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: var(--navy);
+      color: var(--white);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      color: var(--gold);
+    }
+
+    header p {
+      font-size: 16px;
+      margin-top: 5px;
+    }
+
+    form {
+      background-color: var(--white);
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: var(--navy);
+      border-left: 5px solid var(--gold);
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: var(--input-padding);
+      border: 1px solid var(--gray-border);
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: var(--font-size);
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--gray-border);
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: var(--font-size);
+    }
+
+    th {
+      background-color: var(--navy);
+      color: var(--white);
+    }
+
+    td:first-child {
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .submit-btn {
+      background-color: var(--gold);
+      color: var(--navy);
+      font-weight: bold;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      margin-top: 30px;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #e0b800;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+    }
+  </style>
+  <script>
+    // Fungsi untuk mengirimkan data menggunakan AJAX
+    function submitForm(event) {
+      event.preventDefault(); // Mencegah form untuk submit secara default
+
+      // Ambil data dari form
+      var formData = new FormData(event.target);
+      var formObject = {};
+      formData.forEach((value, key) => { formObject[key] = value });
+
+      // Mengonversi data menjadi format JSON
+      var jsonData = JSON.stringify(formObject);
+
+      // Mengirim data ke aplikasi web menggunakan fetch (AJAX)
+      fetch('https://script.google.com/macros/s/AKfycbzBfbP3_An-qPQBIXD5bIJ-kaPMJiiYOaL5Pg7Tj6Yc5Yl-7eYThNXRUNwxx39jzjpd/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json' // Mengirim data dalam format JSON
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("Penilaian terkirim!");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Terjadi kesalahan. Coba lagi.");
+      });
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Form Penilaian Pegawai Teladan</h1>
+    <p>Lapas Kelas IIA Kotabaru</p>
+  </header>
+
+  <!-- Formulir dengan method POST -->
+  <form onsubmit="submitForm(event)">
+    <div class="section-title">A. Penilai</div>
+
+    <label for="nama_penilai">Nama Penilai</label>
+    <input type="text" id="nama_penilai" name="nama_penilai" required />
+
+    <label for="jabatan_penilai">Jabatan Penilai</label>
+    <input type="text" id="jabatan_penilai" name="jabatan_penilai" required />
+
+    <div class="section-title">B. Penilaian Kinerja</div>
+    <p><em>Skala 1 = Sangat Kurang, 5 = Sangat Baik</em></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Aspek Penilaian</th>
+          <th>Rizky Pramudya</th>
+          <th>Windi Muhammad Nur</th>
+          <th>Muhammad Nor Riandi</th>
+          <th>Icho Marselawati</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Disiplin (kehadiran & ketepatan waktu)</td>
+          <td><input type="number" name="disiplin_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="disiplin_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="disiplin_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="disiplin_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Integritas (jujur, bertanggung jawab)</td>
+          <td><input type="number" name="integritas_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="integritas_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="integritas_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="integritas_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Etos Kerja (inisiatif, semangat kerja)</td>
+          <td><input type="number" name="etos_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="etos_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="etos_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="etos_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Kerja Sama (dalam tim & antar unit)</td>
+          <td><input type="number" name="kerjasama_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="kerjasama_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="kerjasama_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="kerjasama_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Pelayanan Publik (ramah, profesional)</td>
+          <td><input type="number" name="pelayanan_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="pelayanan_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="pelayanan_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="pelayanan_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Inovasi dan Kreativitas</td>
+          <td><input type="number" name="inovasi_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="inovasi_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="inovasi_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="inovasi_icho" min="1" max="5" required /></td>
+        </tr>
+        <tr>
+          <td>Penampilan dan Kerapian</td>
+          <td><input type="number" name="penampilan_rizky" min="1" max="5" required /></td>
+          <td><input type="number" name="penampilan_windi" min="1" max="5" required /></td>
+          <td><input type="number" name="penampilan_muhammad" min="1" max="5" required /></td>
+          <td><input type="number" name="penampilan_icho" min="1" max="5" required /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">C. Catatan Tambahan</div>
+    <label>Catatan/komentar tambahan</label>
+    <textarea name="catatan" rows="4"></textarea>
+
+    <button class="submit-btn" type="submit">Kirim Penilaian</button>
+  </form>
+</body>
+</html>
